@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas" />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #E4DFD5; font-family: 'Jost', Helvetica, sans-serif; }
+</style>
+</helmet>
+
+<div style="display:flex; gap:28px; align-items:flex-start; justify-content:center; padding:24px; box-sizing:border-box;">
+
+  <div style="display:flex; flex-direction:column; gap:10px; flex:none;">
+    <div style="display:flex; align-items:baseline; justify-content:center; gap:10px;">
+      <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#20201D;">Mobile</span>
+      <span style="font-size:10px; letter-spacing:.14em; color:#6F6B63;">375 × 812 · 1:1</span>
+    </div>
+    <div style="width:401px; padding:13px; background:#20201D; border-radius:40px; box-shadow:0 40px 90px -50px rgba(32,32,29,.6);">
+      <div style="width:375px; height:812px; overflow:hidden; border-radius:28px; background:#F7F4EE;">
+        <iframe src="Luna Residence.dc.html" title="Luna Residence — mobilni prikaz" style="width:375px; height:812px; border:0; display:block;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:10px; flex:none;">
+    <div style="display:flex; align-items:baseline; justify-content:center; gap:10px;">
+      <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#20201D;">Desktop</span>
+      <span style="font-size:10px; letter-spacing:.14em; color:#6F6B63;">1440 × 900 · prikaz 30%</span>
+    </div>
+    <div style="width:432px; height:270px; overflow:hidden; border:1px solid #C8BDAE; background:#F7F4EE; box-shadow:0 40px 90px -50px rgba(32,32,29,.5);">
+      <iframe src="Luna Residence.dc.html" title="Luna Residence — desktop prikaz" style="width:1440px; height:900px; border:0; display:block; transform:scale(.3); transform-origin:top left;"></iframe>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
