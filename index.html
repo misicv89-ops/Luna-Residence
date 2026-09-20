@@ -8,7 +8,8 @@
 <meta name="theme-color" content="#F7F4EE">
 <meta name="robots" content="index,follow">
 <style>
-  html, body { margin: 0; padding: 0; width: 100%; max-width: 100%; overflow-x: hidden; background: #F7F4EE; }
+  html, body { margin: 0; padding: 0; width: 100%; max-width: 100%; height: auto !important; min-height: 100%; overflow-x: hidden; overflow-y: visible !important; background: #F7F4EE; }
+  #dc-root, #dc-root > .sc-host { height: auto !important; }
   x-dc, x-dc > div, body > x-dc { display: block; width: 100%; margin: 0; padding: 0; }
 </style>
 </head>
@@ -735,11 +736,12 @@ class Component extends DCLogic {
     const burger = () => document.querySelector('[data-burger]');
     const parallax = Array.from(document.querySelectorAll('[data-parallax]'));
     this._onScroll = () => {
-      const y = window.scrollY;
-      const solid = y > 60;
+      const y = window.scrollY || document.body.scrollTop || document.documentElement.scrollTop || 0;
+      const solid = y > 24;
       if (nav) {
-        nav.style.background = solid ? 'rgba(247,244,238,.94)' : 'transparent';
+        nav.style.background = solid ? '#F7F4EE' : 'transparent';
         nav.style.backdropFilter = solid ? 'blur(14px)' : 'none';
+        nav.style.boxShadow = solid ? '0 12px 30px -24px rgba(32,32,29,.65)' : 'none';
         nav.style.borderBottomColor = solid ? 'rgba(200,189,174,.8)' : 'rgba(200,189,174,0)';
         nav.style.padding = solid ? '16px clamp(20px,4vw,56px)' : '26px clamp(20px,4vw,56px)';
       }
@@ -757,6 +759,7 @@ class Component extends DCLogic {
       });
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
+    document.addEventListener('scroll', this._onScroll, true);
     this._onScroll();
 
     const reveal = Array.from(document.querySelectorAll('[data-reveal]'));
@@ -837,6 +840,7 @@ class Component extends DCLogic {
   componentWillUnmount() {
     window.removeEventListener('resize', this._onResize);
     window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('scroll', this._onScroll, true);
     window.removeEventListener('keydown', this._onKey);
     if (this._io) this._io.disconnect();
     clearInterval(this._reviewTimer);
@@ -932,7 +936,13 @@ class Component extends DCLogic {
           if (g && gd) { const num = parseInt(g.value, 10); if (num) gd.value = num; }
         }
         const el = document.getElementById('rezervacija');
-        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
+        if (el) {
+          const root = (document.body.scrollHeight > document.body.clientHeight && document.body.scrollTop >= 0 && document.documentElement.scrollHeight <= document.documentElement.clientHeight) ? document.body : window;
+          const cur = window.scrollY || document.body.scrollTop || document.documentElement.scrollTop || 0;
+          const top = el.getBoundingClientRect().top + cur - 70;
+          if (root === window) window.scrollTo({ top: top, behavior: 'smooth' });
+          else document.body.scrollTo({ top: top, behavior: 'smooth' });
+        }
       },
       onBook: (e) => {
         e.preventDefault();
