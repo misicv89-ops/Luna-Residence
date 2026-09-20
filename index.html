@@ -792,6 +792,32 @@ class Component extends DCLogic {
     };
     window.addEventListener('keydown', this._onKey);
 
+    const vid = document.querySelector('#top video');
+    if (vid) {
+      vid.muted = true;
+      vid.defaultMuted = true;
+      vid.volume = 0;
+      vid.setAttribute('muted', '');
+      vid.setAttribute('playsinline', '');
+      vid.setAttribute('webkit-playsinline', '');
+      vid.setAttribute('autoplay', '');
+      vid.setAttribute('loop', '');
+      vid.setAttribute('preload', 'auto');
+      const tryPlay = function () {
+        const p = vid.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      tryPlay();
+      vid.addEventListener('loadeddata', tryPlay);
+      vid.addEventListener('canplay', tryPlay);
+      this._kick = function () { tryPlay(); };
+      ['touchstart', 'pointerdown', 'click', 'scroll'].forEach((ev) => {
+        document.addEventListener(ev, this._kick, { passive: true });
+      });
+      document.addEventListener('visibilitychange', this._kick);
+      this._playTimer = setInterval(function () { if (vid.paused) tryPlay(); }, 1500);
+    }
+
     this._reviewTimer = setInterval(() => {
       if (this.state.autoPlay && this.state.lightbox < 0) this.stepReview(1);
     }, 5200);
@@ -845,6 +871,11 @@ class Component extends DCLogic {
     if (this._io) this._io.disconnect();
     clearInterval(this._reviewTimer);
     clearInterval(this._langTick);
+    clearInterval(this._playTimer);
+    if (this._kick) {
+      ['touchstart', 'pointerdown', 'click', 'scroll'].forEach((ev) => document.removeEventListener(ev, this._kick));
+      document.removeEventListener('visibilitychange', this._kick);
+    }
   }
 
   step(d) {
