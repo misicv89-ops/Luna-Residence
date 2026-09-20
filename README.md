@@ -7,8 +7,7 @@ Statični sajt (HTML + JS), spreman za GitHub Pages ili bilo koji static hosting
 - `index.html` — ceo sajt (hero video, galerija sa lightboxom, sadržaji, lokacija, recenzije, FAQ, booking forma, footer, SR/EN prevod)
 - `support.js` — runtime koji renderuje stranicu (obavezan, ne brisati)
 - `uploads/` — sve fotografije i hero video
-- `Luna Residence.dc.html` — izvorni fajl za dalje izmene u editoru (nije potreban za hosting)
-- `Luna Residence - Preview.dc.html` — desktop/mobile preview (nije potreban za hosting)
+- `preview.html` — pregled desktop/mobilne verzije jedan pored drugog (nije potreban za hosting, može se obrisati)
 
 ## Objavljivanje na GitHub Pages
 

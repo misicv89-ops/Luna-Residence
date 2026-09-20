@@ -54,7 +54,7 @@
     #top h1, #top p { color: #FFFFFF !important; }
     #top > div:first-child { position: absolute !important; inset: 0 !important; overflow: hidden !important; }
     #top video { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
-    #top > div:first-child img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
+
     #galerija div[style*="minmax(min(100%, 300px)"] { grid-template-columns: minmax(0, 1fr) !important; }
     #galerija div[style*="minmax(min(100%, 300px)"] > div { grid-column: auto !important; width: 100% !important; }
     #lokacija div[style*="border-top"] { width: 100% !important; max-width: none !important; }
@@ -132,14 +132,13 @@
 
   <section id="top" style="position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(120px,15vh,170px) 0 clamp(24px,4vw,56px);">
     <div style="position:absolute; inset:0; overflow:hidden;">
-      <img src="uploads/Gemini_Generated_Image_ogfo1logfo1logfo.jpeg" alt="Pogled sa terase Luna Residence na kompleks i Niš u sumrak" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; z-index:0;" />
-      <video autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" poster="uploads/Gemini_Generated_Image_ogfo1logfo1logfo.jpeg" aria-label="Video prikaz apartmana Luna Residence u Nišu" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block; z-index:0;">
+      <video autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" aria-label="Video prikaz apartmana Luna Residence u Nišu" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block; z-index:0; background:#20201D;">
         <source src="uploads/snapsave-app_3665872980723056773_52382028436.mp4" type="video/mp4" />
       </video>
       <div style="position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,20,17,.62) 0%, rgba(20,20,17,.52) 45%, rgba(20,20,17,.78) 100%);"></div>
     </div>
 
-    <div style="position:relative; max-width:1400px; width:100%; margin:0 auto; padding:0 clamp(20px,4vw,56px);">
+    <div style="position:relative; z-index:2; max-width:1400px; width:100%; margin:0 auto; padding:0 clamp(20px,4vw,56px);">
       <div style="max-width:760px; animation:lrRise 1.1s cubic-bezier(.22,.61,.36,1) both;">
         <p style="color:#F7F4EE; font-size:12px; letter-spacing:.34em; text-transform:uppercase; margin:0 0 22px; opacity:.85;">Niš • Srbija</p>
         <h1 style="font-family:'Cormorant Garamond',serif; font-weight:300; color:#FFFFFF; font-size:clamp(44px,7vw,92px); line-height:1.02; margin:0 0 20px; letter-spacing:-.01em;">Vaš miran kutak<br>u Nišu</h1>
@@ -151,11 +150,11 @@
       <form onSubmit="{{ onCheck }}" style="margin-top:clamp(40px,6vw,72px); background:rgba(247,244,238,.94); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.6); padding:clamp(18px,2.2vw,26px); display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:clamp(14px,2vw,28px); align-items:end; box-shadow:0 30px 80px -40px rgba(20,20,17,.55);">
         <label style="display:flex; flex-direction:column; gap:8px;">
           <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#6F6B63;">Dolazak</span>
-          <input type="date" name="checkin" style="border:0; border-bottom:1px solid #C8BDAE; background:transparent; padding:10px 0; font-size:15px; color:#20201D; outline:none; width:100%;" style-focus="border-bottom-color:#3F4539">
+          <input type="date" name="checkin" placeholder="dd.mm.gggg" onClick="{{ openPicker }}" onFocus="{{ openPicker }}" style="border:0; border-bottom:1px solid #C8BDAE; background:transparent; padding:10px 0; font-size:15px; color:#20201D; outline:none; width:100%;" style-focus="border-bottom-color:#3F4539">
         </label>
         <label style="display:flex; flex-direction:column; gap:8px;">
           <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#6F6B63;">Odlazak</span>
-          <input type="date" name="checkout" style="border:0; border-bottom:1px solid #C8BDAE; background:transparent; padding:10px 0; font-size:15px; color:#20201D; outline:none; width:100%;" style-focus="border-bottom-color:#3F4539">
+          <input type="date" name="checkout" placeholder="dd.mm.gggg" onClick="{{ openPicker }}" onFocus="{{ openPicker }}" style="border:0; border-bottom:1px solid #C8BDAE; background:transparent; padding:10px 0; font-size:15px; color:#20201D; outline:none; width:100%;" style-focus="border-bottom-color:#3F4539">
         </label>
         <label style="display:flex; flex-direction:column; gap:8px;">
           <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#6F6B63;">Gosti</span>
@@ -492,11 +491,11 @@
         <form onSubmit="{{ onBook }}" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr)); gap:clamp(20px,3vw,34px);">
           <label style="display:flex; flex-direction:column; gap:10px;">
             <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#C8BDAE;">Dolazak</span>
-            <input type="date" name="checkin" required="required" style="background:transparent; border:0; border-bottom:1px solid rgba(200,189,174,.5); color:#FFFFFF; padding:12px 0; font-size:15px; outline:none; color-scheme:dark;" style-focus="border-bottom-color:#F7F4EE">
+            <input type="date" name="checkin" placeholder="dd.mm.gggg" onClick="{{ openPicker }}" onFocus="{{ openPicker }}" required="required" style="background:transparent; border:0; border-bottom:1px solid rgba(200,189,174,.5); color:#FFFFFF; padding:12px 0; font-size:15px; outline:none; color-scheme:dark;" style-focus="border-bottom-color:#F7F4EE">
           </label>
           <label style="display:flex; flex-direction:column; gap:10px;">
             <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#C8BDAE;">Odlazak</span>
-            <input type="date" name="checkout" required="required" style="background:transparent; border:0; border-bottom:1px solid rgba(200,189,174,.5); color:#FFFFFF; padding:12px 0; font-size:15px; outline:none; color-scheme:dark;" style-focus="border-bottom-color:#F7F4EE">
+            <input type="date" name="checkout" placeholder="dd.mm.gggg" onClick="{{ openPicker }}" onFocus="{{ openPicker }}" required="required" style="background:transparent; border:0; border-bottom:1px solid rgba(200,189,174,.5); color:#FFFFFF; padding:12px 0; font-size:15px; outline:none; color-scheme:dark;" style-focus="border-bottom-color:#F7F4EE">
           </label>
           <label style="display:flex; flex-direction:column; gap:10px;">
             <span style="font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:#C8BDAE;">Broj gostiju</span>
@@ -887,6 +886,10 @@ class Component extends DCLogic {
       reviewCounter: (st.reviewIndex + 1) + ' / ' + nR,
       autoLabel: st.autoPlay ? 'Pauziraj' : 'Pusti',
       autoBtnStyle: { minWidth: '112px', height: '46px', padding: '0 20px', background: st.autoPlay ? 'transparent' : '#3F4539', color: st.autoPlay ? '#20201D' : '#FFFFFF', border: '1px solid ' + (st.autoPlay ? '#C8BDAE' : '#3F4539'), fontSize: '11px', letterSpacing: '.2em', textTransform: 'uppercase', cursor: 'pointer', transition: 'background .3s ease, color .3s ease' },
+      openPicker: (e) => {
+        const el = e.currentTarget || e.target;
+        if (el && typeof el.showPicker === 'function') { try { el.showPicker(); } catch (err) {} }
+      },
       toggleAuto: () => this.setState(s => ({ autoPlay: !s.autoPlay })),
       nextReview: () => { this.setState({ autoPlay: false }); this.stepReview(1); },
       prevReview: () => { this.setState({ autoPlay: false }); this.stepReview(-1); },
@@ -918,6 +921,16 @@ class Component extends DCLogic {
       prevImg: () => this.step(-1),
       onCheck: (e) => {
         e.preventDefault();
+        const f = e.currentTarget || e.target;
+        const target = document.querySelector('#rezervacija form');
+        if (f && target) {
+          ['checkin', 'checkout'].forEach(function (nm) {
+            const src = f.querySelector('[name="' + nm + '"]'), dst = target.querySelector('[name="' + nm + '"]');
+            if (src && dst && src.value) dst.value = src.value;
+          });
+          const g = f.querySelector('[name="guests"]'), gd = target.querySelector('[name="guests"]');
+          if (g && gd) { const num = parseInt(g.value, 10); if (num) gd.value = num; }
+        }
         const el = document.getElementById('rezervacija');
         if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
       },
