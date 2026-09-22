@@ -9,7 +9,8 @@ Nema build koraka, nema npm-a — fajlovi se serviraju kakvi jesu.
 /
 ├── index.html      ceo sajt (sve sekcije, logika, stilovi)
 ├── support.js      runtime koji renderuje stranicu — OBAVEZAN
-├── uploads/        sve fotografije (.jpg/.jpeg) + hero video (.mp4)
+├── motion.js       animacije (GSAP + ScrollTrigger)
+├── uploads/        sve fotografije (.jpg/.jpeg) + video (.mp4, trenutno se ne koristi)
 ├── .nojekyll       isključuje Jekyll obradu na GitHub Pages
 ├── README.md       ovo uputstvo
 └── preview.html    desktop/mobile pregled (opciono, može se obrisati)
@@ -26,10 +27,11 @@ Sopstveni domen: Settings → Pages → Custom domain.
 ## Šta sadrži
 
 - Sticky navbar (ivory pozadina pri skrolu), SR/EN prekidač, CTA "Rezerviši" (poziva 060 4570545)
-- Hero sa video pozadinom (autoplay, muted, loop, playsinline — radi i na iOS/Android), gradient overlay, CTA "Istraži apartman" i booking panel (Dolazak / Odlazak / Gosti)
+- Hero sa fotografijom preko cele sekcije (pogled sa terase), gradient overlay, CTA "Istraži apartman" i booking panel (Dolazak / Odlazak / Gosti)
 - Quick features, O apartmanu, Galerija sa fullscreen lightboxom (35 fotografija), Sadržaji, "Sve na jednom mestu" (01–04), Lokacija sa Google mapom, Recenzije (rotirajuće, pause/prev/next), FAQ akordeon, Booking forma, Final CTA, Footer
 - Animacije: scroll reveal, fade-up, stagger, hover zoom, parallax, smooth scroll, akordeon i lightbox tranzicije
-- Responsive: desktop / tablet / mobilni (video ostaje i na mobilnom)
+- Responsive: desktop / tablet / mobilni
+- Animacije (motion.js): cinematic ulaz stranice, sporo uvećanje hero slike, parallax (desktop), otkrivanje naslova, slika i kartica pri skrolu, brojači, hover mikro-interakcije; poštuje "reduced motion"
 
 ## Booking forma → FormSubmit
 
@@ -55,5 +57,5 @@ Imena polja su već spremna: `checkin`, `checkout`, `guests`, `name`, `phone`, `
 
 ## Napomene
 
-- Stranica učitava React i Google Fonts sa CDN-a — potreban je internet.
+- Stranica učitava React, GSAP i Google Fonts sa CDN-a — potreban je internet. Ako GSAP ne učita, sajt radi sa osnovnim animacijama.
 - `.nojekyll` i `support.js` ne brisati.

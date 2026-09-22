@@ -3,6 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" crossorigin="anonymous"></script>
+<script src="./motion.js"></script>
+<style>
+  html.lr-motion [data-reveal], html.lr-motion #lr-nav,
+  html.lr-motion #top > div:last-child > div > *, html.lr-motion #top form { opacity: 0; }
+  #top { overflow: hidden; }
+  header nav a[data-navlink] { position: relative; }
+  header nav a[data-navlink]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+  header nav a[data-navlink]:hover::after, header nav a[data-navlink]:focus-visible::after { transform: scaleX(1); }
+  section a[href="#rezervacija"], section a[href="#apartman"], section a[href="#galerija"], section button[type="submit"], #galerija button, header a[href^="tel:"] {
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease, opacity .2s ease, transform .25s cubic-bezier(.22,1,.36,1) !important; }
+  @media (hover: hover) {
+    section a[href="#rezervacija"]:hover, section a[href="#apartman"]:hover, section a[href="#galerija"]:hover, section button[type="submit"]:hover, #galerija button:hover, header a[href^="tel:"]:hover { transform: scale(1.03); }
+  }
+  section a[href="#rezervacija"]:active, section a[href="#apartman"]:active, section a[href="#galerija"]:active, section button[type="submit"]:active, #galerija button:active, header a[href^="tel:"]:active { transform: scale(.97); }
+  input, select, textarea { transition: border-color .35s ease !important; }
+  @keyframes lrZoom { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+  div[style*="z-index: 120"] img { animation: lrZoom .45s cubic-bezier(.22,1,.36,1) both; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+    *, *::after { animation-duration: .01ms !important; transition-property: opacity, color, background-color, border-color !important; }
+  }
+</style>
 <script src="./support.js"></script>
 <link rel="canonical" href="https://lunaresidence.rs/">
 <meta name="theme-color" content="#F7F4EE">
@@ -54,7 +78,7 @@
     #top form { width: 100% !important; }
     #top h1, #top p { color: #FFFFFF !important; }
     #top > div:first-child { position: absolute !important; inset: 0 !important; overflow: hidden !important; }
-    #top video { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
+    #top > div:first-child > img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
     #galerija div[style*="minmax(min(100%, 300px)"] { grid-template-columns: minmax(0, 1fr) !important; }
     #galerija div[style*="minmax(min(100%, 300px)"] > div { grid-column: auto !important; width: 100% !important; }
@@ -133,9 +157,7 @@
 
   <section id="top" style="position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(120px,15vh,170px) 0 clamp(24px,4vw,56px);">
     <div style="position:absolute; inset:0; overflow:hidden;">
-      <video autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" preload="auto" aria-label="Video prikaz apartmana Luna Residence u Nišu" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block; z-index:0; background:#20201D;">
-        <source src="uploads/snapsave-app_3665872980723056773_52382028436.mp4" type="video/mp4" />
-      </video>
+      <img src="uploads/Gemini_Generated_Image_ogfo1logfo1logfo.jpeg" alt="Pogled sa terase Luna Residence na kompleks i Niš u sumrak" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block; z-index:0;" />
       <div style="position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(20,20,17,.62) 0%, rgba(20,20,17,.52) 45%, rgba(20,20,17,.78) 100%);"></div>
     </div>
 
@@ -687,7 +709,7 @@ class Component extends DCLogic {
       'Hvala vam na zahtevu': 'Thank you for your request',
       'Vaš zahtev je zabeležen. Javljamo vam se u najkraćem roku sa potvrdom dostupnosti.': 'Your request has been received. We will contact you shortly to confirm availability.',
       'Broj gostiju': 'Number of guests', 'Ime i prezime': 'Full name', 'Telefon': 'Phone',
-      'Poruka': 'Message', 'Pošalji zahtev za rezervaciju': 'Send booking request',
+      'Poruka': 'Message', 'Pošalji zahtev za rezervaciju': 'Send booking request', 'Šaljem…': 'Sending…',
       'Rezervacija se potvrđuje nakon naše potvrde dostupnosti.': 'The booking is confirmed once we verify availability.',
       'Vaš boravak počinje ovde.': 'Your stay begins here.',
       'Rezervišite Luna Residence i uživajte u udobnosti modernog apartmana u Nišu.': 'Book Luna Residence and enjoy the comfort of a modern apartment in Niš.',
@@ -734,7 +756,7 @@ class Component extends DCLogic {
     const nav = document.getElementById('lr-nav');
     const links = () => Array.from(document.querySelectorAll('[data-navlink]'));
     const burger = () => document.querySelector('[data-burger]');
-    const parallax = Array.from(document.querySelectorAll('[data-parallax]'));
+    const parallax = window.gsap ? [] : Array.from(document.querySelectorAll('[data-parallax]'));
     this._onScroll = () => {
       const y = window.scrollY || document.body.scrollTop || document.documentElement.scrollTop || 0;
       const solid = y > 24;
@@ -762,7 +784,7 @@ class Component extends DCLogic {
     document.addEventListener('scroll', this._onScroll, true);
     this._onScroll();
 
-    const reveal = Array.from(document.querySelectorAll('[data-reveal]'));
+    const reveal = window.gsap ? [] : Array.from(document.querySelectorAll('[data-reveal]'));
     reveal.forEach(function (el, i) {
       el.style.opacity = '0';
       el.style.transform = 'translateY(26px)';
@@ -977,7 +999,7 @@ class Component extends DCLogic {
       },
       onBook: (e) => {
         e.preventDefault();
-        this.setState({ sent: true });
+        setTimeout(() => this.setState({ sent: true }), 900);
       }
     };
   }
